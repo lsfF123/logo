@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rugari — Handmade Rugs</title>
+  <meta name="description"
+    content="Rugari — handmade rugs. Close-up hero, curated collection, modern e-commerce style." />
+  <style>
+    /* ---------- Reset & base ---------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color: #222;
+      background: #faf8f6;
+      line-height: 1.35;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    img {
+      display: block;
+      max-width: 100%
+    }
+
+    /* ---------- Top nav ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.55));
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .nav-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 5%;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column
+    }
+
+    .brand .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.6px;
+      color: #111
+    }
+
+    .brand .tag {
+      font-size: 0.72rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 2px
+    }
+
+    nav .links {
+      display: flex;
+      gap: 1rem;
+      align-items: center
+    }
+
+    nav .links a {
+      font-size: 0.95rem;
+      color: #333;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      transition: background .18s, color .18s
+    }
+
+    nav .links a:hover {
+      background: rgba(168, 126, 58, 0.06);
+      color: #b88b4a
+    }
+
+    .controls {
+      display: flex;
+      gap: .5rem;
+      align-items: center
+    }
+
+    .btn {
+      background: #b88b4a;
+      color: #fff;
+      border: 0;
+      padding: .45rem .85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem
+    }
+
+    .ghost {
+      background: transparent;
+      color: #333;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      padding: .35rem .65rem;
+      border-radius: 8px;
+      cursor: pointer
+    }
+
+    /* ---------- Hero (close-up full-bleed) ---------- */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 92vh;
+      min-height: 520px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    /* large image fills and centers on a rug detail (close-up) */
+    .hero .hero-media {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      transform-origin: center;
+      transition: transform .8s ease;
+      will-change: transform;
+      filter: contrast(1.02) saturate(1.05);
+    }
+
+    .hero .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.35) 60%, rgba(0, 0, 0, 0.5) 100%);
+      pointer-events: none;
+    }
+
+    .hero .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 5%;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transform: translateY(-10px);
+    }
+
+    .kicker {
+      font-size: .82rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.9)
+    }
+
+    .hero h1 {
+      font-size: clamp(2.1rem, 4.6vw, 4rem);
+      line-height: 1.02;
+      margin-top: .3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em
+    }
+
+    .hero p {
+      max-width: 720px;
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.92)
+    }
+
+    .hero .cta-row {
+      display: flex;
+      gap: .75rem;
+      margin-top: 1rem;
+      flex-wrap: wrap
+    }
+
+    /* ---------- Collection / Cards ---------- */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 3.2rem 5%
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem
+    }
+
+    .section-head h2 {
+      font-size: 1.5rem;
+      color: #111
+    }
+
+    .section-head p {
+      color: #666;
+      font-size: .92rem
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(11, 15, 20, 0.04);
+      transition: transform .25s, box-shadow .25s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 40px rgba(11, 15, 20, 0.07)
+    }
+
+    .card .imgwrap {
+      width: 100%;
+      height: 220px;
+      overflow: hidden
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center
+    }
+
+    .card .meta {
+      padding: 0.9rem 1rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.04)
+    }
+
+    .card .meta h3 {
+      font-size: 1rem;
+      margin-bottom: .25rem
+    }
+
+    .card .meta p {
+      font-size: .86rem;
+      color: #666
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+      background: #222;
+      padding: 2.7rem 5%;
+      color: #ddd
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .small {
+      font-size: .85rem;
+      color: #aaa
+    }
+
+    /* ---------- Upload helper (hidden small box) ---------- */
+    .uploader {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: #fff;
+      padding: .8rem;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .12);
+      z-index: 80;
+      display: flex;
+      gap: .6rem;
+      align-items: center
+    }
+
+    .uploader input {
+      display: none
+    }
+
+    /* ---------- Responsive tweaks ---------- */
+    @media (max-width:900px) {
+      .hero {
+        height: 76vh;
+        min-height: 420px
+      }
+
+      .card .imgwrap {
+        height: 200px
+      }
+    }
+
+    @media (max-width:520px) {
+      .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .6rem
+      }
+
+      .hero p {
+        font-size: .95rem
+      }
+    }
+
+    /* Arabic direction class */
+    body.arabic {
+      direction: rtl
+    }
+
+    body.arabic .hero .hero-content {
+      text-align: right
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">Rugari</div>
+        <div class="tag" id="tagline">Purely Handmade Rugs</div>
+      </div>
+
+      <nav class="links" aria-label="Main navigation">
+        <a href="#collection">Collection</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <div class="controls">
+          <button class="ghost" id="toggle-lang" aria-pressed="false">AR</button>
+          <button class="btn" id="shop-now"
+            onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})">Shop Collection</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero: close-up big image -->
+  <main>
+    <section class="hero" aria-hidden="false">
+      <!-- Use srcset so you can provide multiple local image files: hero_xl.jpg (1920+), hero_md.jpg (1200), hero_sm.jpg (800) -->
+      <img class="hero-media" id="hero-media" src="./images/hero_banner_xl.jpg.png"
+        srcset="./images/hero_banner_sm.jpg.png 800w, ./images/hero_banner_md.jpg.png 1200w, ./images/hero_banner_xl.jpg.png 1920w"
+        alt="Close-up texture of handmade rug (hero)" />
+      <div class="overlay" aria-hidden="true"></div>
+
+      <div class="hero-content" role="region" aria-label="Hero">
+        <div class="kicker">Handmade • Durable • Washable</div>
+        <h1 id="hero-title">Rugari — Close-up Crafted Detail</h1>
+        <p id="hero-sub">A vivid close-up capture showcasing the pile, weave and color depth — perfect for showing
+          texture at full scale. Designed for product hero and immersive landing experience.</p>
+        <div class="cta-row">
+          <button class="btn" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})">Shop
+            Rugs</button>
+          <a class="ghost" href="#about">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Collection -->
+    <section id="collection" class="container" aria-labelledby="collection-title">
+      <div class="section-head">
+        <h2 id="collection-title">Featured Handmade Collection</h2>
+        <p>Curated styles — photography-ready product shots. Click any card to replace image with your local file
+          (upload helper).</p>
+      </div>
+
+      <div class="grid" id="grid">
+        <!-- Cards follow the order you asked (vintage, geometric, bohemian, oriental, neutral, moroccan, abstract, vintage heritage) -->
+        <article class="card" data-key="vintage">
+          <div class="imgwrap"><img id="img-vintage" src="./images/vintage_wool.jpg.png" alt="Vintage Wool Rug"></div>
+          <div class="meta">
+            <h3 id="name-vintage">Vintage Wool Rug</h3>
+            <p>Classic Persian-inspired pattern, warm palette.</p>
+          </div>
+        </article>
+
+        <article class="card" data-key="geometric">
+          <div class="imgwrap"><img id="img-geometric" src="./images/geometric_pattern.jpg.png" alt="Geometric Pattern Rug">
+          </div>
+          <div class="meta">
+            <h3 id="name-geometric">Geometric Pattern Rug</h3>
+            <p>Modern lines, Scandinavian-friendly tones.</p>
+          </div>
+        </article>
+
+        <article class="card" data-key="bohemian">
+          <div class="imgwrap"><img id="img-bohemian" src="./images/bohemian_style.jpg.png" alt="Bohemian Style Rug"></div>
+          <div class="meta">
+            <h3 id="name-bohemian">Bohemian Style Rug</h3>
+            <p>Colorful tribal motifs for cozy spaces.</p>
+          </div>
+        </article>
+
+        <article class="card" data-key="oriental">
+          <div class="imgwrap"><img id="img-oriental" src="./images/oriental_silk.jpg.png" alt="Oriental Silk Rug"></div>
+          <div class="meta">
+            <h3 id="name-oriental">Oriental Silk Rug</h3>
+            <p>Intricate arabesque with luxe sheen.</p>
+          </div>
+        </article>
+
+        <article class="card" data-key="neutral">
+          <div class="imgwrap"><img id="img-neutral" src="./images/neutral_tone.jpg.png" alt="Neutral Tone Rug"></div>
+          <div class="meta">
+            <h3 id="name-neutral">Neutral Tone Rug</h3>
+            <p>Minimal palette, broad appeal.</p>
+          </div>
+        </article>
+
+        <article class="card" data-key="moroccan">
+          <div class="imgwrap"><img id="img-moroccan" src="./images/moroccan_berber.jpg.png" alt="Moroccan Berber Rug">
+          </div>
+          <div class="meta">
+            <h3 id="name-moroccan">Moroccan Berber Rug</h3>
+            <p>Cream base with bold diamond detail.</p>
+          </div>
+        </article>
+
+        <article class="card" data-key="abstract">
+          <div class="imgwrap"><img id="img-abstract" src="./images/abstract_modern.jpg.png" alt="Abstract Modern Rug">
+          </div>
+          <div class="meta">
+            <h3 id="name-abstract">Abstract Modern Rug</h3>
+            <p>Artful shapes and pastel accents.</p>
+          </div>
+        </article>
+
+        <article class="card" data-key="vintage2">
+          <div class="imgwrap"><img id="img-vintage2" src="./images/vintage_heritage.jpg.png" alt="Vintage Heritage Rug">
+          </div>
+          <div class="meta">
+            <h3 id="name-vintage2">Vintage Heritage Rug</h3>
+            <p>Timed patterns, character-rich look.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- About (brief) -->
+    <section id="about" class="container" aria-labelledby="about-title">
+      <div class="section-head">
+        <h2 id="about-title">About Rugari</h2>
+        <p>We partner with artisans to craft durable, beautiful rugs — photographed for clarity and texture detail.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:1rem;align-items:center">
+        <p style="color:#555">Rugari focuses on high-quality handmade rugs designed to be both decorative and practical.
+          Materials, weave, and dye are chosen to ensure texture and color depth. All products are photographed in high
+          resolution to display weave and pile details — ideal for hero close-ups and product pages.</p>
+        <div style="background:#fff;border-radius:10px;padding:1rem;box-shadow:0 8px 30px rgba(11,15,20,0.04)">
+          <strong>Contact</strong>
+          <div style="margin-top:.6rem;color:#666">m1175284704@gmail.com</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+      <div class="footer-inner">
+        <div>
+          <div style="font-weight:700;color:#fff">Rugari</div>
+          <div class="small" style="margin-top:.45rem">Handmade rugs — photographed with texture-first approach.</div>
+        </div>
+        <div class="small">© 2025 Rugari. All rights reserved.</div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Uploader helper: click circle to pick files and match by keyword (or drop onto card) -->
+  <div class="uploader" title="Upload & replace images">
+    <label style="display:flex;gap:.6rem;align-items:center;cursor:pointer">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#222" aria-hidden>
+        <path d="M12 2L12 14M12 2L7 7M12 2L17 7" stroke="#222" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      <span style="font-size:.95rem;color:#222">Upload</span>
+      <input id="fileInput" type="file" accept="image/*" multiple aria-label="Upload images to replace placeholders">
+    </label>
+    <button class="ghost" id="resetBtn" style="padding:.35rem .5rem">Reset</button>
+  </div>
+
+  <script>
+    // --------- Language toggle (EN/AR) ----------
+    const toggle = document.getElementById('toggle-lang');
+    let arabic = false;
+    toggle.addEventListener('click', () => {
+      arabic = !arabic;
+      document.body.classList.toggle('arabic', arabic);
+      document.getElementById('tagline').textContent = arabic ? 'سجاد يدوي الصنع بالكامل' : 'Purely Handmade Rugs';
+      toggle.textContent = arabic ? 'EN' : 'AR';
+      // small RTL content swap for headings
+      document.getElementById('hero-title').textContent = arabic ? 'روغاري — تفاصيل منقوشة عن قرب' : 'Rugari — Close-up Crafted Detail';
+      document.getElementById('hero-sub').textContent = arabic ? 'التصوير المقرب الذي يبرز النسج وعمق اللون.' : 'A vivid close-up capture showcasing the pile, weave and color depth — perfect for showing texture at full scale.';
+      document.getElementById('collection-title').textContent = arabic ? 'المجموعة المميزة' : 'Featured Handmade Collection';
+    });
+
+    // --------- Upload & replace logic ----------
+    // Mapping keys: if filename contains key -> replace the corresponding image
+    const mapping = [
+      { key: 'vintage', id: 'img-vintage' },
+      { key: 'geometric', id: 'img-geometric' },
+      { key: 'bohemian', id: 'img-bohemian' },
+      { key: 'oriental', id: 'img-oriental' },
+      { key: 'neutral', id: 'img-neutral' },
+      { key: 'moroccan', id: 'img-moroccan' },
+      { key: 'abstract', id: 'img-abstract' },
+      { key: 'vintage2', id: 'img-vintage2' },
+      // synonyms
+      { key: 'persian', id: 'img-vintage' },
+      { key: 'silk', id: 'img-oriental' },
+      { key: 'berber', id: 'img-moroccan' }
+    ];
+
+    const fileInput = document.getElementById('fileInput');
+    const resetBtn = document.getElementById('resetBtn');
+
+    fileInput.addEventListener('change', e => handleFiles(e.target.files));
+    resetBtn.addEventListener('click', resetImages);
+
+    // Drag & drop onto cards: allow replacing single card by dropping file onto it
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('dragover', ev => { ev.preventDefault(); card.style.outline = '3px dashed rgba(184,139,74,0.35)'; });
+      card.addEventListener('dragleave', ev => { card.style.outline = 'none'; });
+      card.addEventListener('drop', ev => {
+        ev.preventDefault(); card.style.outline = 'none';
+        const f = ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files[0];
+        if (f) replaceCardImage(card, f);
+      });
+      // click card to open file picker for that card
+      card.addEventListener('click', () => {
+        // create temporary file input for single replacement
+        const tmp = document.createElement('input');
+        tmp.type = 'file'; tmp.accept = 'image/*';
+        tmp.onchange = e => { const f = e.target.files[0]; if (f) replaceCardImage(card, f); };
+        tmp.click();
+      });
+    });
+
+    function handleFiles(fileList) {
+      const files = Array.from(fileList);
+      files.forEach(file => {
+        const name = file.name.toLowerCase();
+        let matched = false;
+        for (const m of mapping) {
+          if (name.includes(m.key)) {
+            const el = document.getElementById(m.id);
+            if (el) {
+              el.src = URL.createObjectURL(file);
+              el.dataset.custom = '1';
+              matched = true;
+              break;
+            }
+          }
+        }
+        if (!matched) {
+          // fill first non-custom slot
+          const order = ['img-vintage', 'img-geometric', 'img-bohemian', 'img-oriental', 'img-neutral', 'img-moroccan', 'img-abstract', 'img-vintage2'];
+          for (const id of order) {
+            const el = document.getElementById(id);
+            if (el && !el.dataset.custom) {
+              el.src = URL.createObjectURL(file);
+              el.dataset.custom = '1';
+              break;
+            }
+          }
+        }
+      });
+    }
+
+    function replaceCardImage(card, file) {
+      const key = card.getAttribute('data-key');
+      let imgId = 'img-' + key;
+      const imgEl = document.getElementById(imgId);
+      if (imgEl) {
+        imgEl.src = URL.createObjectURL(file);
+        imgEl.dataset.custom = '1';
+      }
+    }
+
+    // Reset to default src assuming images folder contains these files (provide names below)
+    function resetImages() {
+      const defs = {
+        'img-vintage': './images/vintage_wool.jpg.png',
+        'img-geometric': './images/geometric_pattern.jpg.png',
+        'img-bohemian': './images/bohemian_style.jpg.png',
+        'img-oriental': './images/oriental_silk.jpg.png',
+        'img-neutral': './images/neutral_tone.jpg.png',
+        'img-moroccan': './images/moroccan_berber.jpg.png',
+        'img-abstract': './images/abstract_modern.jpg.png',
+        'img-vintage2': './images/vintage_heritage.jpg.png',
+        'hero-media': './images/hero_banner_xl.jpg.png'
+      };
+      Object.keys(defs).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.src = defs[id]; delete el.dataset.custom; }
+      });
+    }
+
+    // Small enhancement: subtle hero parallax on mouse move
+    (function heroParallax() {
+      const hero = document.querySelector('.hero');
+      const media = document.getElementById('hero-media');
+      if (!hero || !media) return;
+      hero.addEventListener('mousemove', ev => {
+        const r = hero.getBoundingClientRect();
+        const px = (ev.clientX - r.left) / r.width - 0.5;
+        const py = (ev.clientY - r.top) / r.height - 0.5;
+        media.style.transform = `scale(1.03) translate(${px * 6}px, ${py * 4}px)`;
+      });
+      hero.addEventListener('mouseleave', () => media.style.transform = 'scale(1)');
+    })();
+
+    // Prevent image URLs from being garbage-collected too early in some browsers
+    window.addEventListener('unload', () => { /* noop */ });
+  </script>
+</body>
+
+</html>
