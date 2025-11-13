@@ -311,6 +311,78 @@
       display: none
     }
 
+    /* ---------- Image Lightbox / Modal ---------- */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .lightbox.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      animation: lightboxZoom 0.3s ease;
+    }
+
+    @keyframes lightboxZoom {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      transition: background 0.2s, transform 0.2s;
+      z-index: 101;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
     /* ---------- Responsive tweaks ---------- */
     @media (max-width:900px) {
       .hero {
@@ -332,6 +404,14 @@
 
       .hero p {
         font-size: .95rem
+      }
+
+      .lightbox-close {
+        top: 10px;
+        right: 10px;
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
       }
     }
 
@@ -499,6 +579,14 @@
     </footer>
   </main>
 
+  <!-- Image Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">×</button>
+      <img id="lightbox-img" src="" alt="Enlarged image">
+    </div>
+  </div>
+
   <!-- Uploader helper: click circle to pick files and match by keyword (or drop onto card) -->
   <div class="uploader" title="Upload & replace images">
     <label style="display:flex;gap:.6rem;align-items:center;cursor:pointer">
@@ -559,14 +647,57 @@
         const f = ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files[0];
         if (f) replaceCardImage(card, f);
       });
-      // click card to open file picker for that card
-      card.addEventListener('click', () => {
-        // create temporary file input for single replacement
-        const tmp = document.createElement('input');
-        tmp.type = 'file'; tmp.accept = 'image/*';
-        tmp.onchange = e => { const f = e.target.files[0]; if (f) replaceCardImage(card, f); };
-        tmp.click();
+      // click image to open lightbox (not the whole card)
+      const img = card.querySelector('img');
+      if (img) {
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', (e) => {
+          e.stopPropagation(); // prevent card click
+          openLightbox(img.src, img.alt);
+        });
+      }
+      // click card (but not image) to open file picker for that card
+      card.addEventListener('click', (e) => {
+        // only if click was not on the image
+        if (e.target.tagName !== 'IMG') {
+          const tmp = document.createElement('input');
+          tmp.type = 'file'; tmp.accept = 'image/*';
+          tmp.onchange = e => { const f = e.target.files[0]; if (f) replaceCardImage(card, f); };
+          tmp.click();
+        }
       });
+    });
+
+    // Lightbox functionality
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    function openLightbox(src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || 'Enlarged image';
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden'; // prevent background scrolling
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = ''; // restore scrolling
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      // close if clicking on the backdrop (not the image)
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // Close lightbox with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        closeLightbox();
+      }
     });
 
     function handleFiles(fileList) {
